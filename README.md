@@ -16,7 +16,7 @@ If you'd like to see some of our Open Source projects we've released in Go, chec
 
 4. https://github.com/monsooncommerce/mockwriter A way to mock-up a writer for the logger when unit testing.
 
-5. https://github.com/monsooncommerce/cryptoutil A simple wrapper to simplify some of Go's built-in cryptographic features (right now it only supports AES encrypt/decrypt).
+5. https://github.com/monsooncommerce/cryptoutil A simple wrapper to simplify some of Go's built-in cryptographic features (right now it only supports AES encrypt/decrypt). It has been pointed out to me that https://godoc.org/golang.org/x/crypto/nacl/secretbox is the more canonical solution, but feel free to use this, too.
 
 ---
 **The defer statement**: A reserved word in Go that causes a function to execute as the last thing that happens when a function returns. You can stack as many as you want and they execute in the reverse order that they were declared. It looks something like this:
