@@ -88,7 +88,26 @@ It doesn't compile: *prog.go:24: f.Foo undefined (type *Fooer is pointer to inte
 
 **Pointer recievers, non-pointer receivers and the implementation of interfaces**
 
-Pointers and the base type they point to have distinct method sets in Go, and this affects how you implement an interface in Go. Let's use our implementation of the `Fooer` interface in the previous example:
+As you program your way through some of your first go projects, you'll likely discover, as I did, that you can add instance-methods to structs. In this way, you can get some object-like stuff going on. You might do it like this in python:
+```python
+class Foo:
+    data_member = 1
+    def increment_data_member(self):
+        self.data_member += 1
+```
+and in Go, it looks like this:
+```go
+type Foo struct {
+	DataMember int
+}
+func (f *Foo) IncrementDataMember() {
+	f.DataMember++
+}
+```
+
+Notice that the method, IncrementDataMember is made a "part" of the Foo struct with the "reciever" between the *func* and the *IncremenentDataMember*? That receiver is a pointer-receiver and if you're like me, you just internalized that as the way things are, but it goes a little deeper.
+
+Pointers and the base type they point to have distinct method sets in Go, and this affects how you implement an interface. Let's use our implementation of the `Fooer` interface in the previous example:
 
 ```go
 type Fooer interface {
@@ -99,6 +118,7 @@ type ImplementsFooer struct{
   DataMember int
 }
 
+// this receiver is NOT a pointer
 func (f ImplementsFooer) Foo() int {
   return f.DataMember
 }
