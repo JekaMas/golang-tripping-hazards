@@ -6,7 +6,7 @@ We hope that by sharing this list we can save new Go developers some time hittin
 
 Compiled by Dan Miles: [Twitter](https://twitter.com/daniel_t_miles), [GitHub](https://github.com/danieltmiles)
 
-If you'd like to see some of our Open Source projects we've released in Go, check out:
+If you'd like to see some of [Monsoon Commerce's](https://www.monsooncommerce.com/) Open Source projects we've released in Go, check out:
 
 1. https://github.com/monsooncommerce/mockstomp We use it to mock a connection to a STOMP-compatable message broker for unit testing purposes
 
