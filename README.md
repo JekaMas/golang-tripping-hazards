@@ -294,4 +294,4 @@ So theInt, as defined in that range object, is safe to work with inside the scop
 for i := 0; i < len(mySlice); i++ {
 	myChan <- &mySlice[i]
 }
-``
+```
