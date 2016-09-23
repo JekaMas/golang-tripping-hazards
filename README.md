@@ -242,3 +242,56 @@ if result, err := someFunction(); err != nil {
 **Postfix Increments**: They're statements, not operators as they are in other languages. fmt.Printf("%v\n", foo++) doesn't work.
 
 ---
+** Range operator doesn't do exactly what I expected**: It seems to give you a strange, quasi-pointer, not a real reference. Take this example:
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	mySlice := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	myChan := make(chan *int, 10)
+
+	for _, theInt := range mySlice {
+		fmt.Printf("putting a pointer to %v on the chan\n", theInt)
+		myChan <- &theInt
+	}
+
+	for i := 1; i <= 10; i++ {
+		thePtr := <-myChan
+		if *thePtr != i {
+			fmt.Printf("pulled %v off the chan, expected %v\n", *thePtr, i)
+		}
+	}
+}
+```
+You might expect it to put each of the members of the mySlice slice on the channel, but it doesn't. The output is:
+```
+putting a pointer to 1 on the chan
+putting a pointer to 2 on the chan
+putting a pointer to 3 on the chan
+putting a pointer to 4 on the chan
+putting a pointer to 5 on the chan
+putting a pointer to 6 on the chan
+putting a pointer to 7 on the chan
+putting a pointer to 8 on the chan
+putting a pointer to 9 on the chan
+putting a pointer to 10 on the chan
+pulled 10 off the chan, expected 1
+pulled 10 off the chan, expected 2
+pulled 10 off the chan, expected 3
+pulled 10 off the chan, expected 4
+pulled 10 off the chan, expected 5
+pulled 10 off the chan, expected 6
+pulled 10 off the chan, expected 7
+pulled 10 off the chan, expected 8
+pulled 10 off the chan, expected 9
+```
+So theInt, as defined in that range object, is safe to work with inside the scope of the for statement, but pointers to it seem to change later. So for a use case like this, it's safer simply to iterate:
+```go
+for i := 0; i < len(mySlice); i++ {
+	myChan <- &mySlice[i]
+}
+``
