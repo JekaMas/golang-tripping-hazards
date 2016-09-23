@@ -242,7 +242,7 @@ if result, err := someFunction(); err != nil {
 **Postfix Increments**: They're statements, not operators as they are in other languages. fmt.Printf("%v\n", foo++) doesn't work.
 
 ---
-** Range operator doesn't do exactly what I expected**: It seems to give you a strange, quasi-pointer, not a real reference. Take this example:
+**Range operator doesn't do exactly what I expected**: It seems to give you a strange, quasi-pointer, not a real reference. Take this example:
 ```go
 package main
 
