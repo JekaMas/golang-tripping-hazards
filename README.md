@@ -45,6 +45,15 @@ func myFunction(intArg int, stringArg string) (int, error) {
 	return intArg, nil // right after this, your deferred networkConn.Close() will execute
 }
 ```
+A deferred function will never be executed if you os.Exit() or log.Fatal() explicitly:
+```go
+func main() {
+  defer func() {
+    fmt.Println("Hello World!") // The anonymous func will not be executed
+  }()
+  os.Exit(1)
+}
+```
 
 ---
 **Interfaces are always pointers**: Consider the following example:
@@ -150,7 +159,7 @@ func main() {
   printFoo(implFoo)
 }
 
-// this function requires a 
+// this function requires a
 // type that implements Fooer
 func printFoo(f Fooer) {
   fmt.Println(f.Foo())
